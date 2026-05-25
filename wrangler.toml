@@ -1,9 +1,10 @@
 name = "machupicchutravel-front"
-compatibility_date = "2024-04-03"
+compatibility_date = "2026-05-25"
+compatibility_flags = ["nodejs_compat"]
 
-# El adapter @astrojs/cloudflare genera el wrangler.json correcto en dist/server/
-# que apunta a assets en dist/client/. Este .toml es la base que el adapter
-# extiende automáticamente.
 [assets]
-directory = "./dist/client"
 binding = "ASSETS"
+directory = "./dist/client"
+
+[observability]
+enabled = true

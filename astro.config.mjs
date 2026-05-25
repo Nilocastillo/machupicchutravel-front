@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
   // Evita que @astrojs/cloudflare v13 auto-habilite sesiones con KV
   // (el binding SESSION sin ID cuelga el deploy para siempre)
   session: {
