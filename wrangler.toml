@@ -1,8 +1,6 @@
 name = "machupicchutravel-front"
-main = "@astrojs/cloudflare/entrypoints/server"
 compatibility_date = "2024-04-03"
 
-# Configuración moderna de assets para Astro 6 en Cloudflare Workers
 [assets]
 directory = "./dist"
 binding = "ASSETS"
