@@ -1,16 +1,32 @@
 ---
+import { heroTranslations } from "@/data/hero";
+
+export interface Props {
+	lang?: string;
+}
+
+const { lang = "es" } = Astro.props;
+const t = heroTranslations[lang] ?? heroTranslations.es;
+
 const heroImage =
 	"https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=2400&q=85";
 ---
 
-{/* Bloque principal del hero: ocupa el primer viewport y contiene imagen, copy y buscador. */}
+{
+	/* Bloque principal del hero: ocupa el primer viewport y contiene imagen, copy y buscador. */
+}
 <header
 	data-hero
 	class="relative flex min-h-screen w-full items-center justify-center bg-deep-emerald z-30"
-	aria-label="Machu Picchu Travel presentation"
+	aria-label={t.eyebrow}
 >
-	{/* Imagen de fondo temporal: placeholder editorial para presentar el destino. */}
-	<picture data-hero-background class="absolute inset-0 z-0 block h-full w-full overflow-hidden">
+	{
+		/* Imagen de fondo temporal: placeholder editorial para presentar el destino. */
+	}
+	<picture
+		data-hero-background
+		class="absolute inset-0 z-0 block h-full w-full overflow-hidden"
+	>
 		<img
 			data-bg
 			alt=""
@@ -22,7 +38,9 @@ const heroImage =
 		/>
 	</picture>
 
-	{/* Capas de contraste: oscurecen la imagen y conectan visualmente con la seccion inferior. */}
+	{
+		/* Capas de contraste: oscurecen la imagen y conectan visualmente con la seccion inferior. */
+	}
 	<div class="hero-overlay absolute inset-0 z-[1]" aria-hidden="true"></div>
 	<div
 		class="absolute inset-x-0 bottom-0 z-[2] h-44 bg-linear-to-b from-transparent via-deep-emerald/80 to-deep-emerald"
@@ -30,7 +48,9 @@ const heroImage =
 	>
 	</div>
 
-	{/* Contenido central del hero: claim principal, descripcion y formulario de busqueda. */}
+	{
+		/* Contenido central del hero: claim principal, descripcion y formulario de busqueda. */
+	}
 	<div
 		class="relative z-20 mx-auto w-full max-w-container-max px-5 pb-20 pt-32 text-center sm:px-8 lg:pt-36"
 	>
@@ -41,34 +61,59 @@ const heroImage =
 				<span
 					class="max-w-[18rem] text-[0.62rem] font-black uppercase tracking-[0.38em] text-action-gold sm:max-w-none sm:tracking-[0.6em]"
 				>
-					The Art of Bespoke Exploration
+					{t.eyebrow}
 				</span>
 				<span class="h-px w-8 bg-action-gold/60 sm:w-12"></span>
 			</div>
 
-			{/* Titulo principal: Inter domina; solo "Spirit" usa Playfair para el acento. */}
+			{/* H1 principal SEO: display serif editorial con jerarquía clara. */}
 			<h1
-				class="mb-10 max-w-5xl text-5xl font-extrabold leading-[0.88] tracking-normal text-white sm:text-6xl md:text-7xl lg:text-8xl"
+				class="mb-8 max-w-5xl text-4xl font-bold leading-[0.92] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
 			>
-				Touch the <span class="font-display italic font-normal text-action-gold"
-					>Spirit</span
-				><br />
-				<span class="text-white/90">of the Andes</span>
+				<span class="font-display">{t.titleMain}</span><br />
+				<span
+					class="mt-6 block text-xl font-display italic font-normal tracking-normal text-action-gold sm:text-2xl md:text-3xl lg:text-4xl"
+				>
+					{t.titleSub}
+				</span>
 			</h1>
 
-			{/* Bajada de valor: resume la promesa de viajes privados y curados. */}
+			{/* Bajada breve: promesa compacta debajo del H1. */}
 			<p
-				class="mb-14 max-w-2xl text-base font-light leading-relaxed tracking-wide text-white/90 md:mb-16 md:text-xl"
+				class="mb-4 max-w-3xl text-sm font-light leading-relaxed tracking-wide text-white/90 md:mb-6 md:text-base"
 			>
-				Orchestrating profound encounters with history through private, curated,
-				and authentically Andean lenses.
+				{t.subtitle}
 			</p>
 
-			{/* Formulario de busqueda: CTA principal para iniciar una exploracion. */}
+			{
+				/* Pill glassmorphism para YouTube: llama la atención sin ser agresivo. */
+			}
+			<a
+				href={t.reviewsUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="group mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-xs transition-all duration-300 hover:scale-105 hover:border-white/60 hover:bg-white/20 md:mb-10"
+			>
+				<svg
+					class="h-5 w-5 transition-transform group-hover:scale-110"
+					viewBox="0 0 24 24"
+					fill="#FF0000"
+					aria-hidden="true"
+				>
+					<path
+						d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5c-1.1.3-1.9 1.1-2.2 2.2C0 8 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.5V8.5l6.2 3.5-6.2 3.5z"
+					></path>
+				</svg>
+				<span class="tracking-wide">{t.reviewsText}</span>
+			</a>
+
+			{
+				/* Formulario de busqueda: CTA principal para iniciar una exploracion. */
+			}
 			<form
 				id="book"
 				class="search-glass relative mx-auto w-full max-w-2xl rounded-2xl border border-white/20 p-2 shadow-2xl shadow-deep-emerald/25"
-				aria-label="Search bespoke journeys"
+				aria-label={t.searchDestination}
 			>
 				{/* Campo destino: captura el lugar o experiencia deseada. */}
 				<label
@@ -90,12 +135,12 @@ const heroImage =
 					<span class="flex min-w-0 flex-1 flex-col">
 						<span
 							class="mb-1 text-[0.62rem] font-black uppercase tracking-widest text-white/70"
-							>Destination</span
+							>{t.searchDestination}</span
 						>
 						<input
 							id="search-input"
 							class="w-full border-none bg-transparent p-0 text-base font-bold text-white placeholder:text-white/45 focus:outline-none focus:ring-0"
-							placeholder="Where do you seek? (e.g. Machu Picchu, Sacred Valley)"
+							placeholder={t.searchPlaceholder}
 							type="text"
 							name="destination"
 							autocomplete="off"
@@ -103,7 +148,7 @@ const heroImage =
 					</span>
 				</label>
 
-				{/* Dropdown de Autocompletado - Hijo directo del form para ocupar el ancho completo de forma armoniosa */}
+				{/* Dropdown de Autocompletado */}
 				<div
 					id="search-dropdown"
 					class="absolute top-[calc(100%+12px)] left-0 right-0 z-50 max-h-[280px] sm:max-h-[380px] overflow-y-auto rounded-xl border border-white/10 bg-deep-emerald/95 backdrop-blur-xl p-3 shadow-2xl transition-all duration-200 ease-out opacity-0 translate-y-2 pointer-events-none scrollbar-thin"
@@ -116,7 +161,7 @@ const heroImage =
 		</div>
 	</div>
 
-	{/* Indicador de scroll: senala que hay contenido editorial debajo del hero. */}
+	{/* Indicador de scroll */}
 	<div
 		class="absolute bottom-9 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white/45"
 		aria-hidden="true"
@@ -128,69 +173,68 @@ const heroImage =
 	</div>
 </header>
 
-{/* Seccion de confianza: estadisticas compactas que reemplazan el contador del ejemplo. */}
-<section class="relative bg-deep-emerald px-5 pb-10 pt-6 sm:px-8 sm:pb-12 sm:pt-8">
-	{/* Separador superior: linea dorada degradada entre el hero y las metricas. */}
+{/* Seccion de confianza: estadisticas compactas */}
+<section
+	class="relative bg-deep-emerald px-5 pb-10 pt-6 sm:px-8 sm:pb-12 sm:pt-8"
+>
+	{/* Separador superior */}
 	<div
 		aria-hidden="true"
 		class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-action-gold/30 to-transparent"
 	>
 	</div>
 
-	<div
-		class="relative z-10 mx-auto max-w-container-max pt-6 sm:pt-7"
-	>
-		{/* Encabezado breve de stats: da contexto sin convertirlo en otra pantalla completa. */}
+	<div class="relative z-10 mx-auto max-w-container-max pt-6 sm:pt-7">
+		{/* Encabezado breve de stats */}
 		<div class="mb-6 flex flex-col items-center gap-2 text-center sm:mb-7">
 			<span class="h-px w-12 bg-action-gold/50"></span>
-			<p class="max-w-lg text-xs font-light leading-relaxed text-white/65 sm:text-sm">
-				Curated journeys shaped by local knowledge, private access, and a
-				standard of care refined over decades.
+			<p
+				class="max-w-lg text-xs font-light leading-relaxed text-white/65 sm:text-sm"
+			>
+				{t.statsHeader}
 			</p>
 		</div>
 
-		{/* Grid de metricas: tres datos de confianza con tratamiento compacto. */}
+		{/* Grid de metricas */}
 		<div
 			class="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-0 md:divide-x md:divide-white/10"
 		>
-			{/* Metrica 1: volumen de viajeros atendidos. */}
-			<article
-				class="relative px-5 py-2 text-center"
-			>
+			{/* Metrica 1: viajeros */}
+			<article class="relative px-5 py-2 text-center">
 				<span
 					class="mb-2 block text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
-					>100k+</span
+					>{t.stats.travelers.value}</span
 				>
 				<span
 					class="mb-2 block text-[0.58rem] font-bold uppercase tracking-[0.28em] text-action-gold sm:text-[0.62rem]"
-					>Global Explorers</span
+					>{t.stats.travelers.label}</span
 				>
-				<p class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65">
-					Trusted by discerning travelers seeking more than just a tour.
+				<p
+					class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65"
+				>
+					{t.stats.travelers.description}
 				</p>
 			</article>
 
-			{/* Metrica 2: trayectoria de la marca. */}
-			<article
-				class="relative px-5 py-2 text-center"
-			>
+			{/* Metrica 2: años */}
+			<article class="relative px-5 py-2 text-center">
 				<span
 					class="mb-2 block text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
-					>20+</span
+					>{t.stats.years.value}</span
 				>
 				<span
 					class="mb-2 block text-[0.58rem] font-bold uppercase tracking-[0.28em] text-action-gold sm:text-[0.62rem]"
-					>Years of Heritage</span
+					>{t.stats.years.label}</span
 				>
-				<p class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65">
-					A legacy of excellence in high-altitude luxury travel since 2004.
+				<p
+					class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65"
+				>
+					{t.stats.years.description}
 				</p>
 			</article>
 
-			{/* Metrica 3: satisfaccion promedio de invitados. */}
-			<article
-				class="relative px-5 py-2 text-center"
-			>
+			{/* Metrica 3: satisfaccion */}
+			<article class="relative px-5 py-2 text-center">
 				<div class="mb-2 flex items-baseline justify-center gap-2">
 					<svg
 						class="h-6 w-6 translate-y-1 fill-action-gold text-action-gold"
@@ -201,16 +245,19 @@ const heroImage =
 							d="m12 2.4 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.4Z"
 						></path>
 					</svg>
-					<span class="text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
-						>4.9</span
+					<span
+						class="text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
+						>{t.stats.satisfaction.value}</span
 					>
 				</div>
 				<span
 					class="mb-2 block text-[0.58rem] font-bold uppercase tracking-[0.28em] text-action-gold sm:text-[0.62rem]"
-					>Guest Satisfaction</span
+					>{t.stats.satisfaction.label}</span
 				>
-				<p class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65">
-					Consistently rated as South America's premier travel agency.
+				<p
+					class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65"
+				>
+					{t.stats.satisfaction.description}
 				</p>
 			</article>
 		</div>
@@ -302,19 +349,22 @@ const heroImage =
 
 	// Lógica de Autocompletado del Buscador
 	const initHeroSearch = () => {
-		const searchInput = document.getElementById("search-input") as HTMLInputElement;
+		const searchInput = document.getElementById(
+			"search-input",
+		) as HTMLInputElement;
 		const searchDropdown = document.getElementById("search-dropdown");
 		const dropdownResults = document.getElementById("dropdown-results");
 		const bookForm = document.getElementById("book") as HTMLFormElement;
 
-		if (!searchInput || !searchDropdown || !dropdownResults || !bookForm) return;
+		if (!searchInput || !searchDropdown || !dropdownResults || !bookForm)
+			return;
 
 		// Aplanar todos los tours para realizar el filtro rápido en el cliente
-		const tours = megaMenuGroups.flatMap(group =>
-			group.items.map(item => ({
+		const tours = megaMenuGroups.flatMap((group) =>
+			group.items.map((item) => ({
 				...item,
-				groupTitle: group.title
-			}))
+				groupTitle: group.title,
+			})),
 		);
 
 		let activeIndex = -1;
@@ -323,24 +373,40 @@ const heroImage =
 		const getFilteredTours = (query: string) => {
 			const cleanQuery = query.trim().toLowerCase();
 			if (!cleanQuery) {
-				// Sugerir experiencias destacadas/populares cuando el buscador está vacío
-				return tours.filter(t => t.featured);
+				return tours.filter((t) => t.featured);
 			}
-			return tours.filter(t => 
-				t.title.toLowerCase().includes(cleanQuery) || 
-				t.region.toLowerCase().includes(cleanQuery) ||
-				t.groupTitle.toLowerCase().includes(cleanQuery)
+			return tours.filter(
+				(t) =>
+					t.title.toLowerCase().includes(cleanQuery) ||
+					t.region.toLowerCase().includes(cleanQuery) ||
+					t.groupTitle.toLowerCase().includes(cleanQuery),
 			);
 		};
 
 		const showDropdown = () => {
-			searchDropdown.classList.remove("opacity-0", "translate-y-2", "pointer-events-none");
-			searchDropdown.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
+			searchDropdown.classList.remove(
+				"opacity-0",
+				"translate-y-2",
+				"pointer-events-none",
+			);
+			searchDropdown.classList.add(
+				"opacity-100",
+				"translate-y-0",
+				"pointer-events-auto",
+			);
 		};
 
 		const hideDropdown = () => {
-			searchDropdown.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
-			searchDropdown.classList.add("opacity-0", "translate-y-2", "pointer-events-none");
+			searchDropdown.classList.remove(
+				"opacity-100",
+				"translate-y-0",
+				"pointer-events-auto",
+			);
+			searchDropdown.classList.add(
+				"opacity-0",
+				"translate-y-2",
+				"pointer-events-none",
+			);
 			activeIndex = -1;
 		};
 
@@ -360,7 +426,7 @@ const heroImage =
 			}
 
 			let html = "";
-			
+
 			if (!query.trim()) {
 				html += `
 					<div class="px-3 pb-2 pt-1 text-[0.58rem] font-bold uppercase tracking-[0.2em] text-action-gold/80 border-b border-white/5 mb-1">
@@ -379,14 +445,20 @@ const heroImage =
 				const isActive = index === activeIndex;
 				let displayTitle = item.title;
 				if (query.trim()) {
-					const regex = new RegExp(`(${query.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, "gi");
-					displayTitle = item.title.replace(regex, `<span class="text-action-gold font-extrabold">$1</span>`);
+					const regex = new RegExp(
+						`(${query.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")})`,
+						"gi",
+					);
+					displayTitle = item.title.replace(
+						regex,
+						`<span class="text-action-gold font-extrabold">$1</span>`,
+					);
 				}
 
 				html += `
 					<a
 						href="${item.href}"
-						class="flex items-center justify-between rounded-lg px-3 py-2.5 transition-all duration-150 text-left ${isActive ? 'bg-white/15' : 'hover:bg-white/5'} group/item"
+						class="flex items-center justify-between rounded-lg px-3 py-2.5 transition-all duration-150 text-left ${isActive ? "bg-white/15" : "hover:bg-white/5"} group/item"
 						data-index="${index}"
 					>
 						<div class="flex flex-col min-w-0 pr-4">
@@ -413,7 +485,7 @@ const heroImage =
 			dropdownResults.innerHTML = html;
 
 			const itemElements = dropdownResults.querySelectorAll("a[data-index]");
-			itemElements.forEach(el => {
+			itemElements.forEach((el) => {
 				el.addEventListener("mouseenter", () => {
 					const idx = parseInt(el.getAttribute("data-index") || "-1");
 					setActiveItem(idx, false);
@@ -461,11 +533,13 @@ const heroImage =
 
 			if (e.key === "ArrowDown") {
 				e.preventDefault();
-				const nextIndex = activeIndex + 1 < visibleItems.length ? activeIndex + 1 : 0;
+				const nextIndex =
+					activeIndex + 1 < visibleItems.length ? activeIndex + 1 : 0;
 				setActiveItem(nextIndex);
 			} else if (e.key === "ArrowUp") {
 				e.preventDefault();
-				const prevIndex = activeIndex - 1 >= 0 ? activeIndex - 1 : visibleItems.length - 1;
+				const prevIndex =
+					activeIndex - 1 >= 0 ? activeIndex - 1 : visibleItems.length - 1;
 				setActiveItem(prevIndex);
 			} else if (e.key === "Escape") {
 				e.preventDefault();
