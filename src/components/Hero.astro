@@ -1,0 +1,518 @@
+---
+const heroImage =
+	"https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=2400&q=85";
+---
+
+{/* Bloque principal del hero: ocupa el primer viewport y contiene imagen, copy y buscador. */}
+<header
+	data-hero
+	class="relative flex min-h-screen w-full items-center justify-center bg-deep-emerald z-30"
+	aria-label="Machu Picchu Travel presentation"
+>
+	{/* Imagen de fondo temporal: placeholder editorial para presentar el destino. */}
+	<picture data-hero-background class="absolute inset-0 z-0 block h-full w-full overflow-hidden">
+		<img
+			data-bg
+			alt=""
+			role="presentation"
+			src={heroImage}
+			class="h-full w-full object-cover object-center will-change-transform"
+			fetchpriority="high"
+			decoding="async"
+		/>
+	</picture>
+
+	{/* Capas de contraste: oscurecen la imagen y conectan visualmente con la seccion inferior. */}
+	<div class="hero-overlay absolute inset-0 z-[1]" aria-hidden="true"></div>
+	<div
+		class="absolute inset-x-0 bottom-0 z-[2] h-44 bg-linear-to-b from-transparent via-deep-emerald/80 to-deep-emerald"
+		aria-hidden="true"
+	>
+	</div>
+
+	{/* Contenido central del hero: claim principal, descripcion y formulario de busqueda. */}
+	<div
+		class="relative z-20 mx-auto w-full max-w-container-max px-5 pb-20 pt-32 text-center sm:px-8 lg:pt-36"
+	>
+		<div class="flex flex-col items-center">
+			{/* Eyebrow editorial: introduce el tono premium del sitio. */}
+			<div class="mb-8 flex items-center justify-center gap-4">
+				<span class="h-px w-8 bg-action-gold/60 sm:w-12"></span>
+				<span
+					class="max-w-[18rem] text-[0.62rem] font-black uppercase tracking-[0.38em] text-action-gold sm:max-w-none sm:tracking-[0.6em]"
+				>
+					The Art of Bespoke Exploration
+				</span>
+				<span class="h-px w-8 bg-action-gold/60 sm:w-12"></span>
+			</div>
+
+			{/* Titulo principal: Inter domina; solo "Spirit" usa Playfair para el acento. */}
+			<h1
+				class="mb-10 max-w-5xl text-5xl font-extrabold leading-[0.88] tracking-normal text-white sm:text-6xl md:text-7xl lg:text-8xl"
+			>
+				Touch the <span class="font-display italic font-normal text-action-gold"
+					>Spirit</span
+				><br />
+				<span class="text-white/90">of the Andes</span>
+			</h1>
+
+			{/* Bajada de valor: resume la promesa de viajes privados y curados. */}
+			<p
+				class="mb-14 max-w-2xl text-base font-light leading-relaxed tracking-wide text-white/90 md:mb-16 md:text-xl"
+			>
+				Orchestrating profound encounters with history through private, curated,
+				and authentically Andean lenses.
+			</p>
+
+			{/* Formulario de busqueda: CTA principal para iniciar una exploracion. */}
+			<form
+				id="book"
+				class="search-glass relative mx-auto w-full max-w-2xl rounded-2xl border border-white/20 p-2 shadow-2xl shadow-deep-emerald/25"
+				aria-label="Search bespoke journeys"
+			>
+				{/* Campo destino: captura el lugar o experiencia deseada. */}
+				<label
+					class="flex items-center rounded-xl bg-white/12 px-5 py-4 text-left md:px-6"
+				>
+					<svg
+						class="mr-4 h-7 w-7 shrink-0 text-action-gold"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.8"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<circle cx="12" cy="12" r="9"></circle>
+						<path d="m15.5 8.5-2.4 4.6-4.6 2.4 2.4-4.6 4.6-2.4Z"> </path>
+					</svg>
+					<span class="flex min-w-0 flex-1 flex-col">
+						<span
+							class="mb-1 text-[0.62rem] font-black uppercase tracking-widest text-white/70"
+							>Destination</span
+						>
+						<input
+							id="search-input"
+							class="w-full border-none bg-transparent p-0 text-base font-bold text-white placeholder:text-white/45 focus:outline-none focus:ring-0"
+							placeholder="Where do you seek? (e.g. Machu Picchu, Sacred Valley)"
+							type="text"
+							name="destination"
+							autocomplete="off"
+						/>
+					</span>
+				</label>
+
+				{/* Dropdown de Autocompletado - Hijo directo del form para ocupar el ancho completo de forma armoniosa */}
+				<div
+					id="search-dropdown"
+					class="absolute top-[calc(100%+12px)] left-0 right-0 z-50 max-h-[280px] sm:max-h-[380px] overflow-y-auto rounded-xl border border-white/10 bg-deep-emerald/95 backdrop-blur-xl p-3 shadow-2xl transition-all duration-200 ease-out opacity-0 translate-y-2 pointer-events-none scrollbar-thin"
+				>
+					<div id="dropdown-results" class="flex flex-col gap-1">
+						{/* Se llena dinámicamente con JS */}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	{/* Indicador de scroll: senala que hay contenido editorial debajo del hero. */}
+	<div
+		class="absolute bottom-9 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white/45"
+		aria-hidden="true"
+	>
+		<span class="text-[0.62rem] font-black uppercase tracking-[0.4em]"
+			>Explore</span
+		>
+		<div class="h-12 w-px bg-gradient-to-b from-white/70 to-transparent"></div>
+	</div>
+</header>
+
+{/* Seccion de confianza: estadisticas compactas que reemplazan el contador del ejemplo. */}
+<section class="relative bg-deep-emerald px-5 pb-10 pt-6 sm:px-8 sm:pb-12 sm:pt-8">
+	{/* Separador superior: linea dorada degradada entre el hero y las metricas. */}
+	<div
+		aria-hidden="true"
+		class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-action-gold/30 to-transparent"
+	>
+	</div>
+
+	<div
+		class="relative z-10 mx-auto max-w-container-max pt-6 sm:pt-7"
+	>
+		{/* Encabezado breve de stats: da contexto sin convertirlo en otra pantalla completa. */}
+		<div class="mb-6 flex flex-col items-center gap-2 text-center sm:mb-7">
+			<span class="h-px w-12 bg-action-gold/50"></span>
+			<p class="max-w-lg text-xs font-light leading-relaxed text-white/65 sm:text-sm">
+				Curated journeys shaped by local knowledge, private access, and a
+				standard of care refined over decades.
+			</p>
+		</div>
+
+		{/* Grid de metricas: tres datos de confianza con tratamiento compacto. */}
+		<div
+			class="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-0 md:divide-x md:divide-white/10"
+		>
+			{/* Metrica 1: volumen de viajeros atendidos. */}
+			<article
+				class="relative px-5 py-2 text-center"
+			>
+				<span
+					class="mb-2 block text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
+					>100k+</span
+				>
+				<span
+					class="mb-2 block text-[0.58rem] font-bold uppercase tracking-[0.28em] text-action-gold sm:text-[0.62rem]"
+					>Global Explorers</span
+				>
+				<p class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65">
+					Trusted by discerning travelers seeking more than just a tour.
+				</p>
+			</article>
+
+			{/* Metrica 2: trayectoria de la marca. */}
+			<article
+				class="relative px-5 py-2 text-center"
+			>
+				<span
+					class="mb-2 block text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
+					>20+</span
+				>
+				<span
+					class="mb-2 block text-[0.58rem] font-bold uppercase tracking-[0.28em] text-action-gold sm:text-[0.62rem]"
+					>Years of Heritage</span
+				>
+				<p class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65">
+					A legacy of excellence in high-altitude luxury travel since 2004.
+				</p>
+			</article>
+
+			{/* Metrica 3: satisfaccion promedio de invitados. */}
+			<article
+				class="relative px-5 py-2 text-center"
+			>
+				<div class="mb-2 flex items-baseline justify-center gap-2">
+					<svg
+						class="h-6 w-6 translate-y-1 fill-action-gold text-action-gold"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							d="m12 2.4 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.4Z"
+						></path>
+					</svg>
+					<span class="text-4xl font-extrabold tracking-normal text-white sm:text-5xl"
+						>4.9</span
+					>
+				</div>
+				<span
+					class="mb-2 block text-[0.58rem] font-bold uppercase tracking-[0.28em] text-action-gold sm:text-[0.62rem]"
+					>Guest Satisfaction</span
+				>
+				<p class="mx-auto max-w-[15rem] text-xs font-light leading-relaxed text-white/65">
+					Consistently rated as South America's premier travel agency.
+				</p>
+			</article>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Mascara del fondo: desvanece la imagen hacia el bloque inferior del hero. */
+	[data-hero-background] {
+		-webkit-mask-image: linear-gradient(
+			to bottom,
+			#000 0%,
+			#000 68%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+	}
+
+	/* Zoom por scroll: la variable se actualiza desde el script del hero. */
+	[data-bg] {
+		transform-origin: center center;
+		transform: scale(var(--hero-bg-scale, 1));
+	}
+
+	/* Accesibilidad de movimiento: desactiva el zoom si el usuario lo prefiere. */
+	@media (prefers-reduced-motion: reduce) {
+		[data-bg] {
+			transform: none;
+		}
+	}
+</style>
+
+<script>
+	import { megaMenuGroups } from "../data/navigation";
+
+	// Efecto de zoom suave: aumenta directamente la imagen mientras se scrollea el hero.
+	const initHeroBackgroundScale = () => {
+		const hero = document.querySelector<HTMLElement>("[data-hero]");
+		const heroBackground = hero?.querySelector<HTMLImageElement>("[data-bg]");
+		if (!hero || !heroBackground) return;
+		if (hero.dataset.scrollZoomReady === "true") return;
+		hero.dataset.scrollZoomReady = "true";
+
+		const reduceMotion = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
+		if (reduceMotion) {
+			heroBackground.style.transform = "none";
+			return;
+		}
+
+		const controller = new AbortController();
+		const { signal } = controller;
+		const maxScale = 0.22;
+		let ticking = false;
+
+		const update = () => {
+			ticking = false;
+			const heroHeight = hero.offsetHeight || window.innerHeight;
+			const heroTop = hero.getBoundingClientRect().top + window.scrollY;
+			const progress = Math.min(
+				Math.max((window.scrollY - heroTop) / heroHeight, 0),
+				1,
+			);
+			heroBackground.style.transform = `scale(${1 + progress * maxScale})`;
+		};
+
+		const onScroll = () => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(update);
+		};
+
+		update();
+		window.addEventListener("scroll", onScroll, { passive: true, signal });
+		window.addEventListener("resize", update, { passive: true, signal });
+
+		document.addEventListener(
+			"astro:before-preparation",
+			() => {
+				controller.abort();
+				delete hero.dataset.scrollZoomReady;
+			},
+			{
+				once: true,
+			},
+		);
+	};
+
+	// Lógica de Autocompletado del Buscador
+	const initHeroSearch = () => {
+		const searchInput = document.getElementById("search-input") as HTMLInputElement;
+		const searchDropdown = document.getElementById("search-dropdown");
+		const dropdownResults = document.getElementById("dropdown-results");
+		const bookForm = document.getElementById("book") as HTMLFormElement;
+
+		if (!searchInput || !searchDropdown || !dropdownResults || !bookForm) return;
+
+		// Aplanar todos los tours para realizar el filtro rápido en el cliente
+		const tours = megaMenuGroups.flatMap(group =>
+			group.items.map(item => ({
+				...item,
+				groupTitle: group.title
+			}))
+		);
+
+		let activeIndex = -1;
+		let visibleItems: typeof tours = [];
+
+		const getFilteredTours = (query: string) => {
+			const cleanQuery = query.trim().toLowerCase();
+			if (!cleanQuery) {
+				// Sugerir experiencias destacadas/populares cuando el buscador está vacío
+				return tours.filter(t => t.featured);
+			}
+			return tours.filter(t => 
+				t.title.toLowerCase().includes(cleanQuery) || 
+				t.region.toLowerCase().includes(cleanQuery) ||
+				t.groupTitle.toLowerCase().includes(cleanQuery)
+			);
+		};
+
+		const showDropdown = () => {
+			searchDropdown.classList.remove("opacity-0", "translate-y-2", "pointer-events-none");
+			searchDropdown.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
+		};
+
+		const hideDropdown = () => {
+			searchDropdown.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
+			searchDropdown.classList.add("opacity-0", "translate-y-2", "pointer-events-none");
+			activeIndex = -1;
+		};
+
+		const renderResults = () => {
+			const query = searchInput.value;
+			visibleItems = getFilteredTours(query);
+
+			if (visibleItems.length === 0) {
+				dropdownResults.innerHTML = `
+					<div class="px-4 py-8 text-center text-white/50">
+						<p class="text-sm font-semibold">No se encontraron experiencias para "${query}"</p>
+						<p class="text-xs text-white/30 mt-1">Probá buscando "Machu Picchu", "Sacred Valley" o "Inca Trail"</p>
+					</div>
+				`;
+				activeIndex = -1;
+				return;
+			}
+
+			let html = "";
+			
+			if (!query.trim()) {
+				html += `
+					<div class="px-3 pb-2 pt-1 text-[0.58rem] font-bold uppercase tracking-[0.2em] text-action-gold/80 border-b border-white/5 mb-1">
+						Experiencias Populares
+					</div>
+				`;
+			} else {
+				html += `
+					<div class="px-3 pb-2 pt-1 text-[0.58rem] font-bold uppercase tracking-[0.2em] text-white/40 border-b border-white/5 mb-1">
+						Resultados de Búsqueda (${visibleItems.length})
+					</div>
+				`;
+			}
+
+			visibleItems.forEach((item, index) => {
+				const isActive = index === activeIndex;
+				let displayTitle = item.title;
+				if (query.trim()) {
+					const regex = new RegExp(`(${query.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, "gi");
+					displayTitle = item.title.replace(regex, `<span class="text-action-gold font-extrabold">$1</span>`);
+				}
+
+				html += `
+					<a
+						href="${item.href}"
+						class="flex items-center justify-between rounded-lg px-3 py-2.5 transition-all duration-150 text-left ${isActive ? 'bg-white/15' : 'hover:bg-white/5'} group/item"
+						data-index="${index}"
+					>
+						<div class="flex flex-col min-w-0 pr-4">
+							<span class="text-sm font-bold text-white group-hover/item:text-action-gold transition-colors duration-150">${displayTitle}</span>
+							<div class="flex items-center gap-3 mt-0.5 text-xs text-white/50">
+								<span class="flex items-center gap-1">
+									<svg class="h-3.5 w-3.5 shrink-0 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+									${item.duration}
+								</span>
+								<span class="h-1 w-1 rounded-full bg-white/20"></span>
+								<span class="flex items-center gap-1">
+									<svg class="h-3.5 w-3.5 shrink-0 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+									${item.region}
+								</span>
+							</div>
+						</div>
+						<span class="shrink-0 text-[0.58rem] font-bold uppercase tracking-widest text-white/30 border border-white/10 rounded px-1.5 py-0.5 bg-white/5">
+							${item.groupTitle}
+						</span>
+					</a>
+				`;
+			});
+
+			dropdownResults.innerHTML = html;
+
+			const itemElements = dropdownResults.querySelectorAll("a[data-index]");
+			itemElements.forEach(el => {
+				el.addEventListener("mouseenter", () => {
+					const idx = parseInt(el.getAttribute("data-index") || "-1");
+					setActiveItem(idx, false);
+				});
+			});
+		};
+
+		const setActiveItem = (index: number, scrollIntoView = true) => {
+			activeIndex = index;
+			const items = dropdownResults.querySelectorAll("a[data-index]");
+			items.forEach((item, idx) => {
+				if (idx === index) {
+					item.classList.add("bg-white/15");
+					item.classList.remove("hover:bg-white/5");
+					if (scrollIntoView) {
+						item.scrollIntoView({ block: "nearest" });
+					}
+				} else {
+					item.classList.remove("bg-white/15");
+					item.classList.add("hover:bg-white/5");
+				}
+			});
+		};
+
+		searchInput.addEventListener("focus", () => {
+			renderResults();
+			showDropdown();
+		});
+
+		searchInput.addEventListener("input", () => {
+			activeIndex = -1;
+			renderResults();
+			showDropdown();
+		});
+
+		searchInput.addEventListener("keydown", (e) => {
+			if (searchDropdown.classList.contains("opacity-0")) {
+				if (e.key === "ArrowDown" || e.key === "Enter") {
+					showDropdown();
+					renderResults();
+					e.preventDefault();
+				}
+				return;
+			}
+
+			if (e.key === "ArrowDown") {
+				e.preventDefault();
+				const nextIndex = activeIndex + 1 < visibleItems.length ? activeIndex + 1 : 0;
+				setActiveItem(nextIndex);
+			} else if (e.key === "ArrowUp") {
+				e.preventDefault();
+				const prevIndex = activeIndex - 1 >= 0 ? activeIndex - 1 : visibleItems.length - 1;
+				setActiveItem(prevIndex);
+			} else if (e.key === "Escape") {
+				e.preventDefault();
+				hideDropdown();
+				searchInput.blur();
+			} else if (e.key === "Enter") {
+				if (activeIndex >= 0 && activeIndex < visibleItems.length) {
+					e.preventDefault();
+					window.location.href = visibleItems[activeIndex].href;
+				} else {
+					if (visibleItems.length > 0) {
+						e.preventDefault();
+						window.location.href = visibleItems[0].href;
+					}
+				}
+			}
+		});
+
+		document.addEventListener("click", (e) => {
+			const target = e.target as HTMLElement;
+			if (!bookForm.contains(target)) {
+				hideDropdown();
+			}
+		});
+
+		bookForm.addEventListener("submit", (e) => {
+			e.preventDefault();
+			const query = searchInput.value.trim();
+			const results = getFilteredTours(query);
+			if (results.length > 0) {
+				window.location.href = results[0].href;
+			}
+		});
+	};
+
+	const initAll = () => {
+		initHeroBackgroundScale();
+		initHeroSearch();
+	};
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initAll, {
+			once: true,
+		});
+	} else {
+		initAll();
+	}
+
+	document.addEventListener("astro:page-load", initAll);
+</script>

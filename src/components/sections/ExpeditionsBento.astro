@@ -1,0 +1,21 @@
+---
+import ExpeditionCard from "@/components/cards/ExpeditionCard.astro";
+
+import type { Props as ExpeditionCardProps } from "@/components/cards/ExpeditionCard.astro";
+
+interface Props {
+	expeditions: ExpeditionCardProps[];
+}
+
+const { expeditions } = Astro.props;
+const featuredExpeditions = expeditions.slice(0, 6);
+---
+
+{/* Bento de expeditions: renderiza exactamente las seis experiencias destacadas. */}
+<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+	{
+		featuredExpeditions.map((expedition) => (
+			<ExpeditionCard {...expedition} />
+		))
+	}
+</div>

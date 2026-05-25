@@ -1,0 +1,200 @@
+---
+import LanguageSelector from "@/components/navigation/LanguageSelector.astro";
+import MegaMenu from "@/components/navigation/MegaMenu.astro";
+import { logoUrl, navLanguages, navTranslations } from "@/data/navigation";
+
+const translationsJson = JSON.stringify(navTranslations);
+---
+
+<nav
+	class="glass-nav fixed left-0 right-0 top-0 z-[100] px-4 py-3 transition-all duration-500 sm:px-6 lg:py-4"
+	data-site-nav
+	data-translations={translationsJson}
+>
+	<div
+		class="mx-auto flex max-w-container-max items-center justify-between gap-4"
+	>
+		<a
+			class="flex min-w-0 items-center gap-2"
+			href="/"
+			aria-label="Machu Picchu Travel home"
+		>
+			<img
+				alt="Machu Picchu Travel Logo"
+				class="h-16 w-auto shrink-0"
+				src={logoUrl}
+			/>
+		</a>
+
+		<!-- Navegacion desktop: mega menu con categorias preparadas para Strapi. -->
+		<MegaMenu mode="desktop" />
+
+		<div class="flex items-center gap-2 sm:gap-3 lg:gap-6">
+			<LanguageSelector languages={navLanguages} />
+
+			<!-- CTA desktop. En movil vive dentro de la hamburguesa. -->
+			<a
+				class="hidden rounded-full bg-deep-emerald px-7 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-primary/10 transition-all hover:bg-primary-container lg:inline-flex"
+				href="#book"
+				data-i18n="book"></a>
+
+			<!-- Boton hamburguesa para abrir/cerrar el menu movil. -->
+			<button
+				class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-deep-emerald/15 text-deep-emerald transition-colors hover:bg-deep-emerald/10 lg:hidden"
+				type="button"
+				aria-label="Open navigation menu"
+				aria-expanded="false"
+				data-menu-toggle
+			>
+				<span class="relative h-3.5 w-5" aria-hidden="true">
+					<span
+						class="absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition-transform"
+						data-menu-line></span>
+					<span
+						class="absolute left-0 top-1.5 h-0.5 w-5 rounded-full bg-current transition-opacity"
+						data-menu-line></span>
+					<span
+						class="absolute bottom-0 left-0 h-0.5 w-5 rounded-full bg-current transition-transform"
+						data-menu-line></span>
+				</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- Menu movil. La apertura/cierre se anima desde CSS con la clase is-open. -->
+	<div
+		class="mobile-menu-shell mx-auto max-w-container-max lg:hidden"
+		data-mobile-menu
+	>
+		<!-- Flex column: mega menu scroll en la parte superior, CTA fija al fondo. -->
+		<div
+			class="flex h-full flex-col rounded-lg border border-deep-emerald/10 bg-white/95 shadow-2xl shadow-deep-emerald/10 backdrop-blur"
+		>
+			<!-- Area scrolleable con el mega menu. -->
+			<div class="flex-1 overflow-y-auto p-3 pb-1">
+				<!-- Version movil del mega menu: categorias plegables con preview corto. -->
+				<MegaMenu mode="mobile" />
+			</div>
+
+			<!-- CTA fija al fondo, separada del contenido scrolleable. -->
+			<div class="shrink-0 border-t border-deep-emerald/10 p-3 pt-3">
+				<a
+					class="flex justify-center rounded-full bg-deep-emerald px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-primary-container"
+					href="#book"
+					data-i18n="book"></a>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<script>
+	const nav = document.querySelector("[data-site-nav]");
+	/** @type {Record<string, Record<string, string>>} */
+	const translations = JSON.parse(
+		nav?.getAttribute("data-translations") ?? "{}",
+	);
+	const menuToggle = nav?.querySelector("[data-menu-toggle]");
+	const mobileMenu = nav?.querySelector("[data-mobile-menu]");
+	const menuLines = nav?.querySelectorAll("[data-menu-line]");
+	const navLinks = nav?.querySelectorAll("[data-nav-link]");
+	const languageMenu = nav?.querySelector("[data-language-menu]");
+	const languageToggle = nav?.querySelector("[data-language-toggle]");
+	const languageOptions = nav?.querySelector("[data-language-options]");
+	const languageCurrent = nav?.querySelector("[data-language-current]");
+
+	// EventTarget no siempre es Node para TypeScript, asi que validamos antes de usar contains().
+	const getClickTargetNode = (event: MouseEvent): Node | null => {
+		return event.target instanceof Node ? event.target : null;
+	};
+
+	// Aplica el idioma elegido a todos los elementos marcados con data-i18n.
+	const setLanguage = (language: string) => {
+		const dictionary = translations[language] ?? translations.en;
+
+		nav?.querySelectorAll("[data-i18n]").forEach((element) => {
+			const key = element.getAttribute("data-i18n");
+			if (key && dictionary[key]) {
+				element.textContent = dictionary[key];
+			}
+		});
+
+		if (languageCurrent) {
+			languageCurrent.textContent = language.toUpperCase();
+		}
+
+		languageOptions
+			?.querySelectorAll("[data-language-option]")
+			.forEach((option) => {
+				const isActive =
+					option.getAttribute("data-language-option") === language;
+				option.setAttribute("aria-current", isActive ? "true" : "false");
+				option.classList.toggle("bg-deep-emerald/10", isActive);
+				option.classList.toggle("text-deep-emerald", isActive);
+			});
+
+		document.documentElement.lang = language;
+		window.localStorage.setItem("site-language", language);
+	};
+
+	// Abre/cierra la hamburguesa y anima las tres lineas del icono.
+	const setMenuOpen = (isOpen: boolean) => {
+		menuToggle?.setAttribute("aria-expanded", String(isOpen));
+		mobileMenu?.classList.toggle("is-open", isOpen);
+		menuLines?.[0]?.classList.toggle("translate-y-1.5", isOpen);
+		menuLines?.[0]?.classList.toggle("rotate-45", isOpen);
+		menuLines?.[1]?.classList.toggle("opacity-0", isOpen);
+		menuLines?.[2]?.classList.toggle("-translate-y-1.5", isOpen);
+		menuLines?.[2]?.classList.toggle("-rotate-45", isOpen);
+	};
+
+	// Controla la visibilidad del dropdown de idiomas.
+	const setLanguageMenuOpen = (isOpen: boolean) => {
+		languageToggle?.setAttribute("aria-expanded", String(isOpen));
+		languageOptions?.classList.toggle("invisible", !isOpen);
+		languageOptions?.classList.toggle("opacity-0", !isOpen);
+		languageOptions?.classList.toggle("translate-y-1", !isOpen);
+	};
+
+
+
+	menuToggle?.addEventListener("click", () => {
+		const isOpen = menuToggle.getAttribute("aria-expanded") !== "true";
+		setMenuOpen(isOpen);
+	});
+
+	languageToggle?.addEventListener("click", () => {
+		const isOpen = languageToggle.getAttribute("aria-expanded") !== "true";
+		setLanguageMenuOpen(isOpen);
+	});
+
+	languageOptions
+		?.querySelectorAll("[data-language-option]")
+		.forEach((option) => {
+			option.addEventListener("click", () => {
+				setLanguage(option.getAttribute("data-language-option") ?? "en");
+				setLanguageMenuOpen(false);
+			});
+		});
+
+	// Cierra menus flotantes al hacer clic fuera del nav o del selector.
+	document.addEventListener("click", (event) => {
+		const target = getClickTargetNode(event);
+		if (!target) {
+			setMenuOpen(false);
+			setLanguageMenuOpen(false);
+			return;
+		}
+
+		if (nav && !nav.contains(target)) {
+			setMenuOpen(false);
+			setLanguageMenuOpen(false);
+		}
+
+		if (languageMenu && !languageMenu.contains(target)) {
+			setLanguageMenuOpen(false);
+		}
+	});
+
+	// Estado inicial restaurado desde localStorage.
+	setLanguage(window.localStorage.getItem("site-language") ?? "en");
+</script>

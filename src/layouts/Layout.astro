@@ -1,3 +1,9 @@
+---
+import { Font } from "astro:assets";
+import SiteNav from "@/components/SiteNav.astro";
+import "@/styles/global.css";
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,10 +11,12 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
+		<Font cssVariable="--font-inter" preload />
+		<Font cssVariable="--font-playfair-display" />
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<SiteNav />
 		<slot />
 	</body>
 </html>

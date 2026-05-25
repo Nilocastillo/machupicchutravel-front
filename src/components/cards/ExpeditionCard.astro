@@ -1,0 +1,100 @@
+---
+export interface Props {
+	badge: string;
+	category: string;
+	duration: string;
+	imageAlt: string;
+	imageSrc: string;
+	price: string;
+	summary: string;
+	title: string;
+}
+
+const {
+	badge,
+	category,
+	duration,
+	imageAlt,
+	imageSrc,
+	price,
+	summary,
+	title,
+} = Astro.props;
+---
+
+{/* Card de expedition: muestra imagen, categoria, resumen, precio y acceso al detalle. */}
+<article
+	class="group overflow-hidden rounded-2xl border border-deep-emerald/10 bg-white shadow-[0_24px_80px_rgb(0_77_61_/_0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_90px_rgb(0_77_61_/_0.14)]"
+>
+	{/* Imagen superior: aporta contexto visual y zoom suave en hover. */}
+	<div class="relative h-64 overflow-hidden sm:h-72">
+		<img
+			alt={imageAlt}
+			class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+			loading="lazy"
+			decoding="async"
+			src={imageSrc}
+		/>
+		<div class="absolute inset-0 bg-linear-to-t from-deep-emerald/30 to-transparent">
+		</div>
+		<div
+			class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 backdrop-blur"
+		>
+			<span
+				class="text-[0.56rem] font-bold uppercase italic tracking-widest text-deep-emerald"
+				>{badge}</span
+			>
+		</div>
+	</div>
+
+	{/* Contenido textual: jerarquia compacta para escanear tours rapidamente. */}
+	<div class="p-6 sm:p-7">
+		<div class="mb-4 flex items-center justify-between gap-4">
+			<span
+				class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-action-gold"
+				>{category}</span
+			>
+			<span class="shrink-0 text-xs font-medium text-secondary">{duration}</span>
+		</div>
+
+		<h3 class="mb-3 text-xl font-bold tracking-normal text-deep-emerald">
+			{title}
+		</h3>
+		<p class="mb-6 text-sm font-light leading-relaxed text-secondary">
+			{summary}
+		</p>
+
+		{/* Footer de la card: precio base y boton circular de navegacion. */}
+		<div class="flex items-center justify-between border-t border-deep-emerald/10 pt-5">
+			<div class="flex flex-col">
+				<span
+					class="text-[0.56rem] font-bold uppercase tracking-widest text-secondary/60"
+					>From</span
+				>
+				<span class="text-lg font-bold text-deep-emerald"
+					>{price} <span class="text-xs font-normal text-secondary">/pp</span></span
+				>
+			</div>
+
+			<button
+				class="flex h-10 w-10 items-center justify-center rounded-full border border-deep-emerald/15 text-deep-emerald transition-all group-hover:bg-deep-emerald group-hover:text-white"
+				type="button"
+				aria-label={`View ${title}`}
+			>
+				<svg
+					class="h-4 w-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<path d="M5 12h14"></path>
+					<path d="m13 6 6 6-6 6"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+</article>

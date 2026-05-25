@@ -2,8 +2,9 @@
   "name": "frontend",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "bun@1.2.23",
   "engines": {
-    "node": ">=22.12.0"
+    "bun": ">=1.2.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -12,6 +13,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.3.7"
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/playfair-display": "^5.2.8",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.3.7",
+    "tailwindcss": "^4.3.0"
   }
 }

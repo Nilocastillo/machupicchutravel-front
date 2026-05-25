@@ -1,0 +1,146 @@
+---
+import ExpeditionsBento from "@/components/sections/ExpeditionsBento.astro";
+
+const expeditions = [
+	{
+		badge: "Private",
+		category: "Heritage Discovery",
+		duration: "8 Days",
+		imageAlt: "Machu Picchu citadel surrounded by Andean mountains",
+		imageSrc:
+			"https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&w=1200&q=80",
+		price: "$4,250",
+		summary:
+			"A meticulous exploration of the Sacred Valley, culminating in a private sunrise viewing of the Citadel.",
+		title: "The Grand Peruvian Circuit",
+	},
+	{
+		badge: "All-Inclusive",
+		category: "Adventure Luxury",
+		duration: "5 Days",
+		imageAlt: "Stone path on the Inca Trail through green Andean peaks",
+		imageSrc:
+			"https://images.unsplash.com/photo-1531968455001-5c5272a41129?auto=format&fit=crop&w=1200&q=80",
+		price: "$3,800",
+		summary:
+			"The classic pilgrimage reimagined with gourmet dining, massage therapists, and premium basecamps.",
+		title: "Luxury Inca Trail Trek",
+	},
+	{
+		badge: "Exclusive",
+		category: "Celestial Travel",
+		duration: "3 Days",
+		imageAlt: "Luxury train traveling through the Andes",
+		imageSrc:
+			"https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=1200&q=80",
+		price: "$2,100",
+		summary:
+			"A seamless overnight journey from Cusco via the legendary luxury train, including sanctuary lodge stay.",
+		title: "Hiram Bingham Escape",
+	},
+	{
+		badge: "Immersion",
+		category: "Bio-Diversity",
+		duration: "6 Days",
+		imageAlt: "Dense Amazon rainforest canopy with a river below",
+		imageSrc:
+			"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80",
+		price: "$3,450",
+		summary:
+			"Navigate the Tambopata reserve with expert biologists and stay in our eco-luxury canopy suites.",
+		title: "Amazon Spirit Expedition",
+	},
+	{
+		badge: "Wellness",
+		category: "Holistic Journey",
+		duration: "7 Days",
+		imageAlt: "Andean mountains under warm light",
+		imageSrc:
+			"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+		price: "$2,900",
+		summary:
+			"Recharge with daily yoga, meditation in ancient ruins, and organic farm-to-table Andean cuisine.",
+		title: "Sacred Valley Wellness",
+	},
+	{
+		badge: "Urban",
+		category: "Culinary Arts",
+		duration: "4 Days",
+		imageAlt: "Historic Cusco street with colonial architecture",
+		imageSrc:
+			"https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1200&q=80",
+		price: "$1,850",
+		summary:
+			"A deep dive into the gastronomic capital of South America with private chefs and market tours.",
+		title: "Cusco Epicurean Escape",
+	},
+];
+---
+
+{/* Signature Expeditions: seccion editorial para los viajes destacados. */}
+<section class="mx-auto max-w-container-max px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+	{/* Header de seccion: titulo, descripcion y filtro visual. */}
+	<div class="mb-12 flex flex-col justify-between gap-8 md:mb-14 md:flex-row md:items-end">
+		<div class="max-w-xl">
+			<h2
+				class="mb-5 text-4xl font-bold tracking-normal text-deep-emerald md:text-5xl"
+			>
+				Signature <span
+					class="font-display italic font-normal text-action-gold"
+					>Expeditions</span
+				>
+			</h2>
+			<p class="text-base font-light leading-relaxed text-secondary md:text-lg">
+				Hand-crafted journeys that blend archaeological wonder with world-class
+				luxury. These are the definitive Andean experiences.
+			</p>
+		</div>
+
+		<button
+			class="group flex items-center gap-4 border-b border-deep-emerald/15 px-2 pb-2 text-deep-emerald"
+			type="button"
+		>
+			<span class="text-[0.68rem] font-bold uppercase tracking-[0.2em]"
+				>Filter by Theme</span
+			>
+			<svg
+				class="h-4 w-4 text-action-gold transition-transform group-hover:rotate-180"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="m6 9 6 6 6-6"></path>
+			</svg>
+		</button>
+	</div>
+
+	{/* Bento de cards: separa la grilla para que la section no cargue todo el markup. */}
+	<ExpeditionsBento expeditions={expeditions} />
+
+	{/* CTA secundario: acceso a la coleccion completa de viajes. */}
+	<div class="mt-12 text-center sm:mt-14">
+		<a
+			class="group inline-flex items-center gap-3 rounded-full border border-deep-emerald/20 bg-transparent px-9 py-4 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-deep-emerald transition-all hover:bg-deep-emerald hover:text-white"
+			href="#journeys"
+		>
+			View All Journeys
+			<svg
+				class="h-4 w-4 transition-transform group-hover:translate-x-1"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M5 12h14"></path>
+				<path d="m13 6 6 6-6 6"></path>
+			</svg>
+		</a>
+	</div>
+</section>

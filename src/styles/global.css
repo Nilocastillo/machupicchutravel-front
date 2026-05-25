@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme inline {
+	/* Tipografias registradas por Astro Fonts. */
+	--font-sans: var(--font-inter);
+	--font-serif: var(--font-playfair-display);
+
+	/* Paleta de marca disponible como clases Tailwind: bg-primary, text-deep-emerald, etc. */
+	--color-primary: #00513f;
+	--color-primary-container: #006b54;
+	--color-deep-emerald: #004d3d;
+	--color-secondary: #6f7d73;
+	--color-action-gold: #c5a059;
+
+	/* Ancho maximo compartido para layouts centrados. */
+	--container-container-max: 1180px;
+}
+
+@layer base {
+	html {
+		background: #f8f5ed;
+		/* Scrollbar personalizado: dorado sobre fondo crema. */
+		scrollbar-color: var(--color-action-gold) #f8f5ed;
+		scrollbar-width: thin;
+	}
+
+	/* Webkit (Chrome, Safari, Edge) */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f8f5ed;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: var(--color-action-gold);
+		border-radius: 999px;
+		border: 2px solid color-mix(in srgb, var(--color-action-gold) 40%, transparent);
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background-color: var(--color-deep-emerald);
+	}
+
+	body {
+		color: var(--color-deep-emerald);
+		font-family: var(--font-inter), system-ui, sans-serif;
+	}
+}
+
+@layer utilities {
+	.hero-overlay {
+		background:
+			linear-gradient(180deg, rgb(0 35 28 / 0.62) 0%, rgb(0 21 16 / 0.18) 45%, rgb(0 77 61 / 0.94) 100%),
+			radial-gradient(circle at 50% 36%, rgb(197 160 89 / 0.2), transparent 42%);
+	}
+
+	.search-glass {
+		background: rgb(255 255 255 / 0.15);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.22),
+			0 24px 80px rgb(0 33 26 / 0.35);
+		backdrop-filter: blur(24px) saturate(130%);
+	}
+
+	[data-bg] {
+		transform-origin: center center;
+		transform: scale(var(--hero-bg-scale, 1));
+	}
+
+	/* Fondo translucido del nav fijo. */
+	.glass-nav {
+		border-bottom: 1px solid rgb(18 63 51 / 0.1);
+		background: rgb(248 245 237 / 0.78);
+		box-shadow: 0 18px 50px rgb(18 63 51 / 0.08);
+		backdrop-filter: blur(18px);
+	}
+
+	/* Clase utilitaria para titulos puntuales con Playfair Display. */
+	.font-display {
+		font-family: var(--font-playfair-display), Georgia, serif;
+	}
+
+	/* Indicador animado del link activo en desktop. */
+	.nav-link-desktop::after {
+		position: absolute;
+		right: 0;
+		bottom: -1px;
+		left: 0;
+		height: 2px;
+		content: "";
+		background: var(--color-action-gold);
+		border-radius: 999px;
+		opacity: 0;
+		transform: scaleX(0.35);
+		transform-origin: center;
+		transition:
+			opacity 220ms ease,
+			transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.group\/mega:hover .nav-link-desktop::after {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+
+	/* Indicador lateral del link activo en movil. */
+	.nav-link-mobile {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.nav-link-mobile::before {
+		position: absolute;
+		inset: 7px auto 7px 8px;
+		width: 3px;
+		content: "";
+		background: var(--color-action-gold);
+		border-radius: 999px;
+		opacity: 0;
+		transform: scaleY(0.35);
+		transition:
+			opacity 180ms ease,
+			transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.nav-link-mobile.is-active::before {
+		opacity: 1;
+		transform: scaleY(1);
+	}
+
+	/* Shell animado del menu movil; evita el salto brusco de display: none. */
+	.mobile-menu-shell {
+		height: 0;
+		padding-top: 0;
+		opacity: 0;
+		overflow: hidden;
+		transform: translateY(-8px);
+		pointer-events: none;
+		transition:
+			height 420ms cubic-bezier(0.22, 1, 0.36, 1),
+			padding-top 280ms ease,
+			opacity 240ms ease,
+			transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.mobile-menu-shell>div {
+		transform: translateY(-6px) scale(0.98);
+		transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.mobile-menu-shell.is-open {
+		height: calc(100vh - 100px);
+		padding-top: 1rem;
+		opacity: 1;
+		overflow: visible;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.mobile-menu-shell.is-open>div {
+		transform: translateY(0) scale(1);
+	}
+
+	/* Transición fluida y continua del mega menú en hover. */
+	[data-mega-panel] {
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 220ms ease, visibility 220ms ease;
+		transition-delay: 150ms;
+	}
+
+	.group\/mega:hover [data-mega-panel] {
+		opacity: 1;
+		visibility: visible;
+		transition-delay: 0s;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	[data-bg] {
+		transform: none;
+	}
+}
