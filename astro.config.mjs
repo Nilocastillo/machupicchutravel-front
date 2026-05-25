@@ -1,21 +1,14 @@
 // @ts-check
-import { defineConfig, fontProviders, sessionDrivers } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  // Evita que @astrojs/cloudflare v13 auto-habilite sesiones con KV
-  // (el binding SESSION sin ID cuelga el deploy para siempre)
-  session: {
-    driver: sessionDrivers.null(),
-  },
   adapter: cloudflare(),
-  image: {
-    service: {
-      entrypoint: 'astro/assets/services/noop'
-    }
+  output: 'server',
+  vite: {
+    plugins: [tailwindcss()]
   },
   fonts: [
     {
@@ -58,8 +51,5 @@ export default defineConfig({
         ]
       }
     }
-  ],
-  vite: {
-    plugins: [tailwindcss()]
-  }
+  ]
 });
