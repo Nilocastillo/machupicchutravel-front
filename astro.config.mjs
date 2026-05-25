@@ -1,10 +1,16 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
-
+import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: cloudflare(),
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/noop'
+    }
+  },
   fonts: [
     {
       provider: fontProviders.local(),
