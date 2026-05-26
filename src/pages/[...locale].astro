@@ -1,0 +1,27 @@
+---
+export const prerender = true;
+import Hero from "@/components/Hero.astro";
+import SignatureExpeditions from "@/components/sections/SignatureExpeditions.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getHomeData, getTourCategories } from "@/data/strapi";
+
+export async function getStaticPaths() {
+  return [
+    { params: { locale: undefined } }, // Ruta raíz / (Inglés por defecto)
+    { params: { locale: "es" } },      // Ruta /es/ (Español)
+    { params: { locale: "pt" } },      // Ruta /pt/ (Portugués)
+  ];
+}
+
+const { locale } = Astro.params;
+const lang = locale || "en";
+
+// Consumimos los datos de Strapi enviando el idioma activo
+const homeData = await getHomeData(lang);
+const tourCategories = await getTourCategories(lang);
+---
+
+<Layout lang={lang} tourCategories={tourCategories}>
+	<Hero lang={lang} homeData={homeData} />
+	<SignatureExpeditions />
+</Layout>

@@ -2,10 +2,18 @@
 import { Font } from "astro:assets";
 import SiteNav from "@/components/SiteNav.astro";
 import "@/styles/global.css";
+import type { StrapiTourCategory } from "@/data/strapi";
+
+interface Props {
+	lang?: string;
+	tourCategories?: StrapiTourCategory[];
+}
+
+const { lang = "en", tourCategories = [] } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -13,10 +21,10 @@ import "@/styles/global.css";
 		<link rel="icon" href="/favicon.ico" />
 		<Font cssVariable="--font-inter" preload />
 		<Font cssVariable="--font-playfair-display" />
-		<title>Astro Basics</title>
+		<title>Machu Picchu Travel</title>
 	</head>
 	<body>
-		<SiteNav />
+		<SiteNav lang={lang} tourCategories={tourCategories} />
 		<slot />
 	</body>
 </html>

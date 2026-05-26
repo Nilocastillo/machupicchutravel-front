@@ -160,6 +160,9 @@ export const navTranslations = {
 		philosophy: "Camino Inca",
 		journal: "Paquetes",
 		book: "Contacto",
+		viewAll: "Ver todos",
+		viewMore: "Ver más",
+		featuredRoutes: "Rutas destacadas",
 	},
 	en: {
 		journeys: "Full Day",
@@ -167,6 +170,9 @@ export const navTranslations = {
 		philosophy: "Inca Trail",
 		journal: "Packages",
 		book: "Contact",
+		viewAll: "View all",
+		viewMore: "View more",
+		featuredRoutes: "Featured routes",
 	},
 	pt: {
 		journeys: "Full Day",
@@ -174,5 +180,8 @@ export const navTranslations = {
 		philosophy: "Trilha Inca",
 		journal: "Pacotes",
 		book: "Contato",
+		viewAll: "Ver todos",
+		viewMore: "Ver mais",
+		featuredRoutes: "Rutas recomendadas",
 	},
 } as const;

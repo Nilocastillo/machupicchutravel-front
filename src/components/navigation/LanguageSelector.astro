@@ -2,10 +2,11 @@
 import { navLanguages } from "@/data/navigation";
 
 interface Props {
+	lang?: string;
 	languages?: typeof navLanguages;
 }
 
-const { languages = navLanguages } = Astro.props;
+const { lang = "en", languages = navLanguages } = Astro.props;
 ---
 
 <!-- Selector simple de idioma. El comportamiento JS vive en SiteNav para compartir estado. -->
@@ -28,7 +29,7 @@ const { languages = navLanguages } = Astro.props;
 				stroke-width="1.8"
 				stroke-linecap="round"></path>
 		</svg>
-		<span data-language-current>EN</span>
+		<span data-language-current>{lang.toUpperCase()}</span>
 	</button>
 
 	<div
@@ -36,15 +37,23 @@ const { languages = navLanguages } = Astro.props;
 		data-language-options
 	>
 		{
-			languages.map((language) => (
-				<button
-					class="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs font-bold uppercase tracking-[0.16em] text-secondary transition-colors hover:bg-deep-emerald/10 hover:text-deep-emerald"
-					type="button"
-					data-language-option={language.code}
-				>
-					{language.label}
-				</button>
-			))
+			languages.map((language) => {
+				const isActive = language.code === lang;
+				return (
+					<a
+						class={`flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs font-bold uppercase tracking-[0.16em] ${
+							isActive
+								? "bg-deep-emerald/10 text-deep-emerald font-extrabold"
+								: "text-secondary hover:bg-deep-emerald/10 hover:text-deep-emerald"
+						} transition-colors`}
+						href={language.code === "en" ? "/" : `/${language.code}/`}
+						data-language-option={language.code}
+						aria-current={isActive ? "true" : "false"}
+					>
+						{language.label}
+					</a>
+				);
+			})
 		}
 	</div>
 </div>

@@ -1,12 +1,19 @@
 ---
 import { heroTranslations } from "@/data/hero";
+import type { StrapiHomeData } from "@/data/strapi";
 
 export interface Props {
 	lang?: string;
+	homeData?: StrapiHomeData | null;
 }
 
-const { lang = "es" } = Astro.props;
+const { lang = "es", homeData } = Astro.props;
 const t = heroTranslations[lang] ?? heroTranslations.es;
+
+// Destructuramos con valores de respaldo (fallback) seguros del archivo estático de traducciones
+const titleMain = homeData?.hero?.title || t.titleMain;
+const titleSub = homeData?.hero?.subtitle || t.titleSub;
+const subtitle = homeData?.hero?.description || t.subtitle;
 
 const heroImage =
 	"https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=2400&q=85";
@@ -70,11 +77,11 @@ const heroImage =
 			<h1
 				class="mb-8 max-w-5xl text-4xl font-bold leading-[0.92] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
 			>
-				<span class="font-display">{t.titleMain}</span><br />
+				<span class="font-display">{titleMain}</span><br />
 				<span
 					class="mt-6 block text-xl font-display italic font-normal tracking-normal text-action-gold sm:text-2xl md:text-3xl lg:text-4xl"
 				>
-					{t.titleSub}
+					{titleSub}
 				</span>
 			</h1>
 
@@ -82,7 +89,7 @@ const heroImage =
 			<p
 				class="mb-4 max-w-3xl text-sm font-light leading-relaxed tracking-wide text-white/90 md:mb-6 md:text-base"
 			>
-				{t.subtitle}
+				{subtitle}
 			</p>
 
 			{
