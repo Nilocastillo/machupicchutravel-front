@@ -1,11 +1,8 @@
 // Traducciones del Hero para los 3 idiomas del sitio.
-// Cuando Strapi esté listo, estos datos pueden venir desde el backend por locale.
+// El título principal, subtítulo y descripción ahora se traen de forma dinámica desde Strapi.
 
 export interface HeroTranslations {
 	eyebrow: string;
-	titleMain: string;
-	titleSub: string;
-	subtitle: string;
 	reviewsText: string;
 	reviewsUrl: string;
 	searchPlaceholder: string;
@@ -21,10 +18,6 @@ export interface HeroTranslations {
 export const heroTranslations: Record<string, HeroTranslations> = {
 	es: {
 		eyebrow: "Machu Picchu Travel",
-		titleMain: "Tours y Paquetes a Machu Picchu 2026 - 2027",
-		titleSub: "Agencia de Viajes en Perú — Entradas Garantizadas",
-		subtitle:
-			"Operador Local en Cusco desde 2003. +100k viajeros satisfechos.",
 		reviewsText: "Ver miles de opiniones en YouTube",
 		reviewsUrl: "https://www.youtube.com/machupicchutravel/videos",
 		searchPlaceholder: "¿A dónde quieres ir? (ej. Machu Picchu, Valle Sagrado)",
@@ -50,10 +43,6 @@ export const heroTranslations: Record<string, HeroTranslations> = {
 	},
 	en: {
 		eyebrow: "Machu Picchu Travel",
-		titleMain: "Machu Picchu Tours & Packages 2026 - 2027",
-		titleSub: "Travel Agency in Peru — Guaranteed Entry Tickets",
-		subtitle:
-			"Local Operator in Cusco since 2003. 100k+ happy travelers.",
 		reviewsText: "See thousands of reviews on YouTube",
 		reviewsUrl: "https://www.youtube.com/machupicchutravel/videos",
 		searchPlaceholder: "Where do you seek? (e.g. Machu Picchu, Sacred Valley)",
@@ -79,10 +68,6 @@ export const heroTranslations: Record<string, HeroTranslations> = {
 	},
 	pt: {
 		eyebrow: "Machu Picchu Travel",
-		titleMain: "Tours e Pacotes para Machu Picchu 2026 - 2027",
-		titleSub: "Agência de Viagens no Peru — Ingressos Garantidos",
-		subtitle:
-			"Operador Local em Cusco desde 2003. +100k viajantes satisfeitos.",
 		reviewsText: "Veja milhares de opiniões no YouTube",
 		reviewsUrl: "https://www.youtube.com/machupicchutravel/videos",
 		searchPlaceholder: "Onde você procura? (ex. Machu Picchu, Vale Sagrado)",
@@ -90,7 +75,7 @@ export const heroTranslations: Record<string, HeroTranslations> = {
 		stats: {
 			travelers: {
 				value: "100k+",
-				label: "Viajantes Satisfeitos",
+				label: "Viajantes Satisfechos",
 				description: "Mais de 100 mil viajantes confiaram em nós desde 2003.",
 			},
 			years: {
@@ -101,7 +86,7 @@ export const heroTranslations: Record<string, HeroTranslations> = {
 			satisfaction: {
 				value: "4.9",
 				label: "Satisfação",
-				description: "Classificado como a melhor agência de viagens da América do Sul.",
+				description: "Classificado como la mejor agência de viagens da América do Sul.",
 			},
 		},
 		statsHeader: "Pacotes turísticos para Peru tudo incluído: voos, hotéis, guias, trens, ingressos, traslados e mais.",

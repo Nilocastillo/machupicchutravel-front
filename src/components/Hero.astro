@@ -10,10 +10,10 @@ export interface Props {
 const { lang = "es", homeData } = Astro.props;
 const t = heroTranslations[lang] ?? heroTranslations.es;
 
-// Destructuramos con valores de respaldo (fallback) seguros del archivo estático de traducciones
-const titleMain = homeData?.hero?.title || t.titleMain;
-const titleSub = homeData?.hero?.subtitle || t.titleSub;
-const subtitle = homeData?.hero?.description || t.subtitle;
+// Destructuramos con valores de respaldo (fallback) seguros basados en el idioma
+const titleMain = homeData?.hero?.title || (lang === "es" ? "Tours y Paquetes a Machu Picchu" : lang === "pt" ? "Tours e Pacotes para Machu Picchu" : "Machu Picchu Tours & Packages");
+const titleSub = homeData?.hero?.subtitle || (lang === "es" ? "Agencia de Viajes en Perú" : lang === "pt" ? "Agência de Viagens no Peru" : "Travel Agency in Peru");
+const subtitle = homeData?.hero?.description || (lang === "es" ? "Operador Local en Cusco desde 2003." : lang === "pt" ? "Operador Local em Cusco desde 2003." : "Local Operator in Cusco since 2003.");
 
 const heroImage =
 	"https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=2400&q=85";
