@@ -35,7 +35,11 @@ const previewLimit = 15;
 				const previewItems = group?.items.slice(0, previewLimit) ?? [];
 
 				return (
-					<div class="group/mega" data-mega-item data-mega-key={link.key}>
+					<div
+						class="group/mega flex items-center py-6 -my-6"
+						data-mega-item
+						data-mega-key={link.key}
+					>
 						<div
 							class="nav-link-desktop relative inline-flex items-center gap-1.5 pb-1 text-[11px] font-bold uppercase tracking-[0.2em] transition-colors cursor-pointer text-primary hover:text-deep-emerald group-hover/mega:text-deep-emerald"
 							role="button"
@@ -46,74 +50,76 @@ const previewLimit = 15;
 							data-mega-toggle={link.key}
 						>
 							{group?.title ?? t[link.key]}
-							<div
-								class="absolute -inset-x-20 top-full h-14 bg-transparent"
-								aria-hidden="true"
-							/>
 						</div>
 
 						{group && (
-							<div
-								class="absolute left-1/2 top-[calc(100%-20px)] w-[min(1180px,calc(100vw-48px))] -translate-x-1/2 pt-8"
-								data-mega-panel={link.key}
-							>
-								{/* Shell del panel: fondo claro con separador dorado superior. */}
-								<div class="relative overflow-hidden rounded-lg border border-deep-emerald/10 bg-white/96 shadow-2xl shadow-deep-emerald/15 backdrop-blur-xl">
-									<div
-										class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-action-gold/40 to-transparent"
-										aria-hidden="true"
-									/>
+							<>
+								<div
+									class="fixed left-0 right-0 top-[4.75rem] hidden h-12 group-hover/mega:block"
+									aria-hidden="true"
+								/>
+								<div
+									class="fixed left-1/2 top-[5.75rem] w-[min(var(--container-container-max),calc(100vw-48px))] -translate-x-1/2 pt-5"
+									data-mega-panel={link.key}
+								>
+									{/* Shell del panel: fondo claro con separador dorado superior. */}
+									<div class="relative overflow-hidden rounded-lg border border-deep-emerald/10 bg-white/96 shadow-2xl shadow-deep-emerald/15 backdrop-blur-xl">
+										<div
+											class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-action-gold/40 to-transparent"
+											aria-hidden="true"
+										/>
 
-									<div class="p-7">
-										<div class="mb-5 flex items-center justify-between">
-											<span class="text-[0.62rem] font-black uppercase tracking-[0.3em] text-secondary">
-												{t.featuredRoutes}
-											</span>
-											<span class="text-xs font-medium text-secondary/70">
-												{showingText} {previewItems.length} {ofText} {group.items.length}
-											</span>
-										</div>
+										<div class="p-7">
+											<div class="mb-5 flex items-center justify-between">
+												<span class="text-[0.62rem] font-black uppercase tracking-[0.3em] text-secondary">
+													{t.featuredRoutes}
+												</span>
+												<span class="text-xs font-medium text-secondary/70">
+													{showingText} {previewItems.length} {ofText} {group.items.length}
+												</span>
+											</div>
 
-										<div class="grid grid-cols-4 gap-x-6 gap-y-2">
-											{previewItems.map((item) => (
-												<a
-													class="group/link rounded-md px-3 py-2.5 transition-colors hover:bg-deep-emerald/5"
-													href={item.href}
-												>
-													<span class="mb-1 flex items-center gap-2">
-														{item.featured && (
-															<span
-																class="h-1.5 w-1.5 rounded-full bg-action-gold"
-																aria-hidden="true"
-															/>
-														)}
-														<span class="truncate text-sm font-bold text-deep-emerald transition-colors group-hover/link:text-primary-container">
-															{item.title}
+											<div class="grid grid-cols-4 gap-x-6 gap-y-2">
+												{previewItems.map((item) => (
+													<a
+														class="group/link rounded-md px-3 py-2.5 transition-colors hover:bg-deep-emerald/5"
+														href={item.href}
+													>
+														<span class="mb-1 flex items-center gap-2">
+															{item.featured && (
+																<span
+																	class="h-1.5 w-1.5 rounded-full bg-action-gold"
+																	aria-hidden="true"
+																/>
+															)}
+															<span class="truncate text-sm font-bold text-deep-emerald transition-colors group-hover/link:text-primary-container">
+																{item.title}
+															</span>
 														</span>
-													</span>
-													<span class="flex items-center gap-2 text-[0.68rem] font-medium text-secondary/75">
-														{item.duration}
-														<span class="h-1 w-1 rounded-full bg-action-gold/50" />
-														{item.region}
+														<span class="flex items-center gap-2 text-[0.68rem] font-medium text-secondary/75">
+															{item.duration}
+															<span class="h-1 w-1 rounded-full bg-action-gold/50" />
+															{item.region}
+														</span>
+													</a>
+												))}
+											</div>
+
+											<div class="mt-5 flex justify-end border-t border-deep-emerald/10 pt-4">
+												<a
+													class="inline-flex items-center gap-2 rounded-full border border-deep-emerald/15 px-5 py-2.5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-deep-emerald transition-all hover:bg-deep-emerald hover:text-white"
+													href={group.href}
+												>
+													{t.viewAll}
+													<span class="text-secondary/70 group-hover:text-white/70">
+														{group.items.length}
 													</span>
 												</a>
-											))}
-										</div>
-
-										<div class="mt-5 flex justify-end border-t border-deep-emerald/10 pt-4">
-											<a
-												class="inline-flex items-center gap-2 rounded-full border border-deep-emerald/15 px-5 py-2.5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-deep-emerald transition-all hover:bg-deep-emerald hover:text-white"
-												href={group.href}
-											>
-												{t.viewAll}
-												<span class="text-secondary/70 group-hover:text-white/70">
-													{group.items.length}
-												</span>
-											</a>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</>
 						)}
 					</div>
 				);
@@ -127,26 +133,31 @@ const previewLimit = 15;
 	(mode === "both" || mode === "mobile") && (
 		<div class="grid gap-2 lg:hidden">
 			{groups.map((group) => (
-				<details class="rounded-md bg-deep-emerald/5">
-					<summary class="flex cursor-pointer list-none items-center justify-between px-3 py-3 text-xs font-bold uppercase tracking-[0.18em] text-deep-emerald">
-						<span data-i18n={group.key}>{group.title}</span>
-						<span class="text-action-gold" aria-hidden="true">
+				<details class="group/mobile overflow-hidden rounded-lg border border-deep-emerald/10 bg-deep-emerald/[0.035] transition-colors open:bg-deep-emerald/[0.06]">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3.5 text-xs font-bold uppercase tracking-[0.16em] text-deep-emerald marker:hidden">
+						<span class="truncate" data-i18n={group.key}>{group.title}</span>
+						<span
+							class="grid size-7 shrink-0 place-items-center rounded-full bg-action-gold/12 text-action-gold transition-transform duration-300 group-open/mobile:rotate-45"
+							aria-hidden="true"
+						>
 							+
 						</span>
 					</summary>
 
-					<div class="grid gap-1 px-3 pb-3">
+					<div class="grid gap-1 border-t border-deep-emerald/10 px-3 pb-3 pt-2">
 						{group.items.slice(0, 6).map((item) => (
 							<a
-								class="rounded-md px-2 py-2 text-sm font-medium text-secondary transition-colors hover:bg-white hover:text-deep-emerald"
+								class="rounded-md px-3 py-2.5 text-sm font-medium text-[#111111] transition-colors hover:bg-white hover:text-deep-emerald"
 								href={item.href}
+								data-mobile-nav-link
 							>
 								{item.title}
 							</a>
 						))}
 						<a
-							class="mt-2 inline-flex justify-center rounded-full bg-deep-emerald px-4 py-2.5 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-white"
+							class="mt-2 inline-flex justify-center rounded-full bg-deep-emerald px-4 py-2.5 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-primary-container"
 							href={group.href}
+							data-mobile-nav-link
 						>
 							{t.viewMore}
 						</a>

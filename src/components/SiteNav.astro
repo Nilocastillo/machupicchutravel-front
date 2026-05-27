@@ -1,7 +1,12 @@
 ---
 import LanguageSelector from "@/components/navigation/LanguageSelector.astro";
 import MegaMenu from "@/components/navigation/MegaMenu.astro";
-import { logoUrl, navLanguages, navTranslations, megaMenuGroups } from "@/data/navigation";
+import {
+	logoUrl,
+	navLanguages,
+	navTranslations,
+	megaMenuGroups,
+} from "@/data/navigation";
 import type { StrapiTourCategory } from "@/data/strapi";
 
 interface Props {
@@ -12,19 +17,33 @@ interface Props {
 const { lang = "en", tourCategories = [] } = Astro.props;
 const t = navTranslations[lang] ?? navTranslations.en;
 
-// Fusionamos las categorías obtenidas del CMS Strapi v5 con la data local del mega menú
+// Mapeo de todas las variantes posibles de slugs traducidos en Strapi v5 para mantener la relación
+const slugMappings: Record<string, string[]> = {
+	journeys: ["journeys", "full-day"],
+	expeditions: ["expeditions", "machu-picchu"],
+	philosophy: ["philosophy", "camino-inca", "inca-trail", "trilha-inca"],
+	journal: ["journal", "paquetes", "packages", "pacotes"]
+};
+
+// Fusionamos las categorías del mega menú utilizando el diccionario local traducido estático según el idioma (i18n)
 const mergedGroups = megaMenuGroups.map((group) => {
-	// Limpiamos la barra diagonal inicial del href para poder comparar con el slug del CMS
 	const cleanSlug = group.href.replace(/^\//, "");
 	
-	// Buscamos coincidencia en Strapi por key (ej. journeys) o por slug de URL (ej. full-day)
-	const strapiCat = tourCategories.find((cat) => cat.slug === group.key || cat.slug === cleanSlug);
+	// Obtenemos los slugs válidos para esta categoría
+	const allowedSlugs = slugMappings[group.key] || [group.key, cleanSlug];
+	
+	// Buscamos coincidencia en Strapi usando nuestro diccionario de variantes
+	const strapiCat = tourCategories.find((cat) => allowedSlugs.includes(cat.slug));
+
+	// Generamos la URL localizada dinámicamente usando el slug oficial de Strapi para este idioma
+	const dynamicSlug = strapiCat?.slug || cleanSlug;
+	const href = lang === "en" ? `/${dynamicSlug}` : `/${lang}/${dynamicSlug}`;
 
 	return {
 		...group,
-		// Si viene de Strapi usamos el nombre dinámico del CMS, sino caemos en el diccionario estático traducido
+		// El título se carga dinámicamente de Strapi si existe, de lo contrario cae en las traducciones estáticas del diccionario
 		title: strapiCat?.name || t[group.key] || group.title,
-		description: strapiCat?.description ? (typeof strapiCat.description === 'string' ? strapiCat.description : group.description) : group.description
+		href: href
 	};
 });
 ---
@@ -57,8 +76,8 @@ const mergedGroups = megaMenuGroups.map((group) => {
 			<!-- CTA desktop. En movil vive dentro de la hamburguesa. -->
 			<a
 				class="hidden rounded-full bg-deep-emerald px-7 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-primary/10 transition-all hover:bg-primary-container lg:inline-flex"
-				href="#book"
-			>{t.book}</a>
+				href="#book">{t.book}</a
+			>
 
 			<!-- Boton hamburguesa para abrir/cerrar el menu movil. -->
 			<button
@@ -90,20 +109,20 @@ const mergedGroups = megaMenuGroups.map((group) => {
 	>
 		<!-- Flex column: mega menu scroll en la parte superior, CTA fija al fondo. -->
 		<div
-			class="flex h-full flex-col rounded-lg border border-deep-emerald/10 bg-white/95 shadow-2xl shadow-deep-emerald/10 backdrop-blur"
+			class="flex h-full flex-col overflow-hidden rounded-xl border border-deep-emerald/10 bg-white/95 shadow-2xl shadow-deep-emerald/15 backdrop-blur-xl"
 		>
 			<!-- Area scrolleable con el mega menu. -->
-			<div class="flex-1 overflow-y-auto p-3 pb-1">
+			<div class="flex-1 overflow-y-auto p-3 pb-2">
 				<!-- Version movil del mega menu: categorias plegables con preview corto. -->
 				<MegaMenu mode="mobile" lang={lang} groups={mergedGroups} />
 			</div>
 
 			<!-- CTA fija al fondo, separada del contenido scrolleable. -->
-			<div class="shrink-0 border-t border-deep-emerald/10 p-3 pt-3">
+			<div class="shrink-0 border-t border-deep-emerald/10 bg-white/90 p-3">
 				<a
-					class="flex justify-center rounded-full bg-deep-emerald px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-primary-container"
-					href="#book"
-				>{t.book}</a>
+					class="flex justify-center rounded-full bg-deep-emerald px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-deep-emerald/10 transition-colors hover:bg-primary-container"
+					href="#book">{t.book}</a
+				>
 			</div>
 		</div>
 	</div>
@@ -117,6 +136,7 @@ const mergedGroups = megaMenuGroups.map((group) => {
 	const languageMenu = nav?.querySelector("[data-language-menu]");
 	const languageToggle = nav?.querySelector("[data-language-toggle]");
 	const languageOptions = nav?.querySelector("[data-language-options]");
+	const mobileNavLinks = nav?.querySelectorAll("[data-mobile-nav-link]");
 
 	// EventTarget no siempre es Node para TypeScript, asi que validamos antes de usar contains().
 	const getClickTargetNode = (event: MouseEvent): Node | null => {
@@ -156,6 +176,10 @@ const mergedGroups = megaMenuGroups.map((group) => {
 		if (isOpen) {
 			setMenuOpen(false);
 		}
+	});
+
+	mobileNavLinks?.forEach((link) => {
+		link.addEventListener("click", () => setMenuOpen(false));
 	});
 
 	// Cierra menus flotantes al hacer clic fuera del nav o del selector.

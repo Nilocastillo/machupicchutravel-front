@@ -5,17 +5,37 @@
  */
 
 // Tipados de la API de Strapi v5
+
+// --- Componentes embebidos (no tienen documentId) ---
+// El `id` aquí solo sirve como key en .map(), no como referencia estable.
+
 export interface StrapiHero {
-  id: number;
+  id?: number;
   title: string;
   subtitle: string;
   description: string;
 }
 
+export interface StrapiStatItem {
+  id?: number;
+  value: string;
+  label: string;
+  description: string;
+}
+
+export interface StrapiStats {
+  id?: number;
+  description?: string;
+  StatItem?: StrapiStatItem[];
+}
+
+// --- Content types raíz (usan documentId como identificador canónico) ---
+
 export interface StrapiHomeData {
-  id: number;
-  documentId: string;
+  documentId: string;   // Identificador estable entre ambientes — usá este siempre
+  id?: number;          // Auto-increment DB — volátil, no referenciar
   hero?: StrapiHero;
+  stats?: StrapiStats;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -23,13 +43,13 @@ export interface StrapiHomeData {
 }
 
 export interface StrapiTourCategory {
-  id: number;
-  documentId: string;
+  documentId: string;   // Identificador estable entre ambientes — usá este siempre
+  id?: number;          // Auto-increment DB — volátil, no referenciar
   name: string;
   slug: string;
   description?: any;
   featuredImage?: {
-    id: number;
+    id?: number;
     url: string;
     alternativeText?: string;
     name?: string;

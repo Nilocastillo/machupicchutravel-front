@@ -1,6 +1,7 @@
 ---
 import { Font } from "astro:assets";
 import SiteNav from "@/components/SiteNav.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
 import "@/styles/global.css";
 import type { StrapiTourCategory } from "@/data/strapi";
 
@@ -26,6 +27,7 @@ const { lang = "en", tourCategories = [] } = Astro.props;
 	<body>
 		<SiteNav lang={lang} tourCategories={tourCategories} />
 		<slot />
+		<SiteFooter />
 	</body>
 </html>
 

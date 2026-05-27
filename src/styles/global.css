@@ -12,7 +12,7 @@
 	--color-action-gold: #c5a059;
 
 	/* Ancho maximo compartido para layouts centrados. */
-	--container-container-max: 1180px;
+	--container-container-max: 80rem;
 }
 
 @layer base {
@@ -79,6 +79,26 @@
 	/* Clase utilitaria para titulos puntuales con Playfair Display. */
 	.font-display {
 		font-family: var(--font-playfair-display), Georgia, serif;
+	}
+
+	/* Estructura compartida para secciones de contenido. */
+	.section-shell {
+		width: 100%;
+		max-width: var(--container-container-max);
+		padding: 4rem 1.25rem 0;
+		margin-inline: auto;
+	}
+
+	@media (min-width: 640px) {
+		.section-shell {
+			padding: 5rem 2rem 0;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.section-shell {
+			padding-top: 6rem;
+		}
 	}
 
 	/* Indicador animado del link activo en desktop. */
@@ -169,13 +189,15 @@
 	[data-mega-panel] {
 		opacity: 0;
 		visibility: hidden;
+		pointer-events: none;
 		transition: opacity 220ms ease, visibility 220ms ease;
-		transition-delay: 150ms;
+		transition-delay: 120ms;
 	}
 
 	.group\/mega:hover [data-mega-panel] {
 		opacity: 1;
 		visibility: visible;
+		pointer-events: auto;
 		transition-delay: 0s;
 	}
 }

@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Hero from "@/components/Hero.astro";
+import RecommendationVideos from "@/components/sections/RecommendationVideos.astro";
 import SignatureExpeditions from "@/components/sections/SignatureExpeditions.astro";
 import Layout from "@/layouts/Layout.astro";
 import { getHomeData, getTourCategories } from "@/data/strapi";
@@ -24,4 +25,5 @@ const tourCategories = await getTourCategories(lang);
 <Layout lang={lang} tourCategories={tourCategories}>
 	<Hero lang={lang} homeData={homeData} />
 	<SignatureExpeditions />
+	<RecommendationVideos />
 </Layout>
